@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Starred Items - Pahang Prism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/event_pages.css' %}">
+    <link rel="stylesheet" href="{% static 'css/starred_list.css' %}">
+</head>
+<body class="starred-list-body">
+    <div class="container">
+        <h1>Your Starred Items</h1>
+
+        <h2>Starred Events</h2>
+        <ul>
+            {% for event in events %}
+            <li>{{ event.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Starred Venues</h2>
+        <ul>
+            {% for venue in venues %}
+            <li>{{ venue.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a href="{% url 'index' %}" class="btn home-btn">Back to Home</a>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo">
+            </div>
+            <div class="footer-address">
+                <h3>PAHANG TOURISM PROMOTION BOARD</h3>
+                <p>9th Floor, Kompleks Teruntum, Jalan Mahkota, 25000 Kuantan, Pahang</p>
+            </div>
+            <div class="footer-contact">
+                <p>Phone: +609-517 7111</p>
+                <p>Email: infopahang@gmail.com</p>
+            </div>
+            <div class="footer-info-line">
+                <h3>TOURISM INFO LINE</h3>
+                <p class="info-number">1300 88 5050</p>
+                <p>Working days from 9.00am to 5.00pm</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Pahang Tourism Promotion Board. All Rights Reserved. View Our <a href="#">Terms of Use</a></p>
+        </div>
+    </footer>
+</body>
+</html>

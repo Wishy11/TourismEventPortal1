@@ -1,0 +1,1 @@
+web: gunicorn TourismEventPortal1.wsgi:application --log-file -

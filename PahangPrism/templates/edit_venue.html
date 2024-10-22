@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Venue - Pahang Prism</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/admin_styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Pahang Prism Admin</h1>
+    </header>
+    <div class="container">
+        <h2>Edit Venue</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ venue.name }}" required>
+            
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="{{ venue.location }}" required>
+            
+            <label for="image">Image:</label>
+            {% if venue.image_path %}
+                <img src="{% get_media_prefix %}{{ venue.image_path }}" alt="{{ venue.name }}" class="venue-image">
+            {% endif %}
+            <input type="file" id="image" name="image">
+            
+            <input type="submit" value="Update Venue">
+        </form>
+        <a href="{% url 'admin_database_management' %}" class="back-link">Back to Database Management</a>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo">
+            </div>
+            <div class="footer-address">
+                <h3>PAHANG TOURISM PROMOTION BOARD</h3>
+                <p>9th Floor, Kompleks Teruntum, Jalan Mahkota, 25000 Kuantan, Pahang</p>
+            </div>
+            <div class="footer-contact">
+                <p>Phone: +609-517 7111</p>
+                <p>Email: infopahang@gmail.com</p>
+            </div>
+            <div class="footer-info-line">
+                <h3>TOURISM INFO LINE</h3>
+                <p class="info-number">1300 88 5050</p>
+                <p>Working days from 9.00am to 5.00pm</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Pahang Tourism Promotion Board. All Rights Reserved. View Our <a href="#">Terms of Use</a></p>
+        </div>
+    </footer>
+</body>
+</html>

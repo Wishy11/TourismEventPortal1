@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booked Events - Pahang Prism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+    }
+</style>
+<body background="{% static 'image/beachkuantan.jpg' %}" class="booked-events-body">
+    <div class="page-container">
+        <div class="content-wrap">
+            <header>
+                <nav>
+                    <div class="logo-container">
+                        <a href="{% url 'index' %}"><img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo" class="logo"></a>
+                        <h1>Pahang Prism</h1>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'event_list' %}">Events</a></li>
+                        <li><a href="{% url 'venue_list' %}">Venues</a></li>
+                        <li><a href="{% url 'search' %}" class="search-btn">Search</a></li>
+                        {% if request.session.userID %}
+                            <li><a href="{% url 'starred_list' %}">Starred</a></li>
+                            <li><a href="{% url 'booked_events' %}">Booked</a></li>
+                            {% if request.session.is_staff %}
+                                <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+                            {% endif %}
+                            <li class="dropdown">
+                                <a href="#" class="dropbtn">
+                                    <img src="{% static 'image/profilelogo.png' %}" alt="Profile" class="profile-icon">
+                                </a>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'user_dashboard' %}">Profile</a>
+                                    <form action="{% url 'logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="logout-btn">Logout</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </header>
+            
+
+            <div class="container">
+                <h1>Your Booked Events</h1>
+                {% if bookings %}
+                    <ul class="booking-list">
+                        {% for booking in bookings %}
+                        <li class="booking-item">
+                            <h3>{{ booking.event.name }}</h3>
+                            <p>Date: {{ booking.event.date }}</p>
+                            <a href="{% url 'cancel_booking' booking.bookingID %}" class="btn cancel-btn">Cancel Booking</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="no-bookings">You have no booked events.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo">
+                </div>
+                <div class="footer-address">
+                    <h3>PAHANG TOURISM PROMOTION BOARD</h3>
+                    <p>9th Floor, Kompleks Teruntum, Jalan Mahkota, 25000 Kuantan, Pahang</p>
+                </div>
+                <div class="footer-contact">
+                    <p>Phone: +609-517 7111</p>
+                    <p>Email: infopahang@gmail.com</p>
+                </div>
+                <div class="footer-info-line">
+                    <h3>TOURISM INFO LINE</h3>
+                    <p class="info-number">1300 88 5050</p>
+                    <p>Working days from 9.00am to 5.00pm</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pahang Tourism Promotion Board. All Rights Reserved. View Our <a href="#">Terms of Use</a></p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

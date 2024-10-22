@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Pahang Prism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<style>
+body {
+    background-image: url('{% static "image/beachkuantan.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+    .featured-content {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+    .featured-card {
+        border-radius: 10px;
+        padding: 40px;
+        width: 48%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .featured-card h3 {
+        color: #ffffff;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .featured-card ul {
+        padding-left: 20px;
+    }
+    .featured-card li {
+        margin-bottom: 10px;
+    }
+    .featured-item {
+        display: flex;
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .featured-image {
+        width: 240px;
+        height: 240px;
+        object-fit: cover;
+    }
+    .featured-text {
+        padding: 15px;
+        flex: 1;
+    }
+    .featured-text h4 {
+        margin-top: 0;
+        color: #2c3e50;
+    }
+    .featured-text p {
+        font-size: 0.9em;
+        color: #34495e;
+        margin-bottom: 10px;
+    }
+    .promo-btn {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.9em;
+        transition: background-color 0.3s ease;
+    }
+    .promo-btn:hover {
+        background-color: #2980b9;
+    }
+</style>
+  
+<body>
+    <div class="page-container">
+        <div class="content-wrap">
+            <header>
+                <nav>
+                    <div class="logo-container">
+                        <a href="{% url 'index' %}"><img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo" class="logo"></a>
+                        <h1>Pahang Prism</h1>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'event_list' %}">Events</a></li>
+                        <li><a href="{% url 'venue_list' %}">Venues</a></li>
+                        <li><a href="{% url 'search' %}" class="search-btn">Search</a></li>
+                        {% if request.session.userID %}
+                            <li><a href="{% url 'starred_list' %}">Starred</a></li>
+                            <li><a href="{% url 'booked_events' %}">Booked</a></li>
+                            {% if request.session.is_staff %}
+                                <li><a href="{% url 'admin_database_management' %}">Database Management</a></li>
+                            {% endif %}
+                            <li class="dropdown">
+                                <a href="#" class="dropbtn">
+                                    <img src="{% static 'image/profilelogo.png' %}" alt="Profile" class="profile-icon">
+                                </a>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'user_dashboard' %}">Profile</a>
+                                    <form action="{% url 'logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="logout-btn">Logout</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </header>
+
+            <div class="container">
+                <div class="card">
+                    {% if request.session.userID %}
+                        <h2>Welcome back, {{ user_full_name }}!</h2>
+                    {% else %}
+                        <h2>Welcome to Pahang Prism</h2>
+                        <p>Please <a href="{% url 'login' %}" class="btn">Login</a> or <a href="{% url 'register' %}" class="btn">Register</a> to access all features.</p>
+                    {% endif %}
+                </div>
+
+                <div class="featured-content">
+                    <div class="featured-card">
+                        <h3>Discover Pahang's Hidden Gems</h3>
+                        <div class="featured-item">
+                            <img src="{% static 'image/cherating.avif' %}" alt="Cherating Beach" class="featured-image">
+                            <div class="featured-text">
+                                <h4>Cherating Beach</h4>
+                                <p>Experience the laid-back charm of Cherating Beach, known for its golden sands and excellent surfing conditions. Enjoy water sports, visit a turtle sanctuary, or simply relax in a hammock under swaying palm trees.</p>
+                            </div>
+                        </div>
+                        <div class="featured-item">
+                            <img src="{% static 'image/fraser.avif' %}" alt="Fraser's Hill" class="featured-image">
+                            <div class="featured-text">
+                                <h4>Fraser's Hill</h4>
+                                <p>Escape to the cool highlands of Fraser's Hill, a quaint colonial-era retreat. Enjoy nature walks, birdwatching, and golf amidst lush greenery and misty mountains.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="featured-card">
+                        <h3>Exclusive Pahang Prism Offers</h3>
+                        <div class="featured-item">
+                            <img src="{% static 'image/tamannegara.avif' %}" alt="Taman Negara Canopy Walk" class="featured-image">
+                            <div class="featured-text">
+                                <h4>Taman Negara Adventure Package</h4>
+                                <p>Book our 3-day Taman Negara package and get a free canopy walk experience! Explore the world's oldest rainforest, go on night safaris, and enjoy river cruises.</p>
+                                <a href="{% url 'event_list' %}" class="promo-btn">Book Now - 15% Off</a>
+                            </div>
+                        </div>
+                        <div class="featured-item">
+                            <img src="{% static 'image/snorkelling.avif' %}" alt="Tioman Island Snorkeling" class="featured-image">
+                            <div class="featured-text">
+                                <h4>Tioman Island Getaway</h4>
+                                <p>Enjoy a 4-day/3-night stay at a beachfront resort on Tioman Island. Package includes snorkeling trips, island hopping, and a seafood dinner under the stars.</p>
+                                <a href="{% url 'event_list' %}" class="promo-btn">Save 20% - Limited Time</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo">
+                </div>
+                <div class="footer-address">
+                    <h3>PAHANG TOURISM PROMOTION BOARD</h3>
+                    <p>9th Floor, Kompleks Teruntum, Jalan Mahkota, 25000 Kuantan, Pahang</p>
+                </div>
+                <div class="footer-contact">
+                    <p>Phone: +609-517 7111</p>
+                    <p>Email: infopahang@gmail.com</p>
+                </div>
+                <div class="footer-info-line">
+                    <h3>TOURISM INFO LINE</h3>
+                    <p class="info-number">1300 88 5050</p>
+                    <p>Working days from 9.00am to 5.00pm</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pahang Tourism Promotion Board. All Rights Reserved. View Our <a href="#">Terms of Use</a></p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

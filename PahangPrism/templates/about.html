@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Pahang Prism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1 0 auto;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .feature {
+            margin-bottom: 20px;
+        }
+        footer {
+            flex-shrink: 0;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            width: 100%;
+        }
+        footer nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        footer nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+        footer nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>About Pahang Prism</h1>
+        
+        <section>
+            <h2>Our Mission</h2>
+            <p>Pahang Prism is dedicated to showcasing the vibrant events and stunning venues across the beautiful state of Pahang, Malaysia. Our mission is to connect locals and tourists with the rich cultural experiences and breathtaking locations that Pahang has to offer.</p>
+        </section>
+        
+        <section>
+            <h2>What We Offer</h2>
+            <div class="feature">
+                <h3>Comprehensive Event Listings</h3>
+                <p>Discover a wide range of events happening throughout Pahang, from traditional festivals to modern concerts and everything in between.</p>
+            </div>
+            <div class="feature">
+                <h3>Venue Exploration</h3>
+                <p>Explore Pahang's diverse venues, including historical sites, natural wonders, and state-of-the-art facilities perfect for any occasion.</p>
+            </div>
+            <div class="feature">
+                <h3>Easy Booking</h3>
+                <p>Book your spot at events with just a few clicks, ensuring you never miss out on the experiences you're interested in.</p>
+            </div>
+            <div class="feature">
+                <h3>Personalized Recommendations</h3>
+                <p>Use our star feature to save your favorite events and venues, helping us provide personalized recommendations tailored to your interests.</p>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Our Commitment</h2>
+            <p>At Pahang Prism, we are committed to promoting the cultural heritage and natural beauty of Pahang while supporting local businesses and event organizers. We strive to provide accurate, up-to-date information to enhance your experience of this wonderful state.</p>
+        </section>
+        
+        <a href="{% url 'index' %}" class="btn">Back to Home</a>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo">
+            </div>
+            <div class="footer-address">
+                <h3>PAHANG TOURISM PROMOTION BOARD</h3>
+                <p>9th Floor, Kompleks Teruntum, Jalan Mahkota, 25000 Kuantan, Pahang</p>
+            </div>
+            <div class="footer-contact">
+                <p>Phone: +609-517 7111</p>
+                <p>Email: infopahang@gmail.com</p>
+            </div>
+            <div class="footer-info-line">
+                <h3>TOURISM INFO LINE</h3>
+                <p class="info-number">1300 88 5050</p>
+                <p>Working days from 9.00am to 5.00pm</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Pahang Tourism Promotion Board. All Rights Reserved. View Our <a href="#">Terms of Use</a></p>
+        </div>
+    </footer>
+</body>
+</html>
+

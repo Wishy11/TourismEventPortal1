@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search - Pahang Prism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+</head>
+<body class="search-body">
+    <div class="container">
+        <h1>Search Events and Venues</h1>
+        <form method="GET" action="{% url 'search' %}" class="search-form">
+            <input type="text" name="q" placeholder="Enter event or venue name" value="{{ query }}">
+            <button type="submit" class="btn search-btn">Search</button>
+        </form>
+
+        {% if query %}
+            <h2>Search Results for "{{ query }}"</h2>
+            
+            {% if events %}
+                <h3>Events</h3>
+                <ul class="search-results">
+                    {% for event in events %}
+                    <li class="result-item">
+                        <h4>{{ event.name }}</h4>
+                        <p>Date: {{ event.date }}</p>
+                        <p>Venue: {{ event.venue.name }}</p>
+                        <a href="{% url 'book_event' event.eventID %}" class="btn">Book Event</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if venues %}
+                <h3>Venues</h3>
+                <ul class="search-results">
+                    {% for venue in venues %}
+                    <li class="result-item">
+                        <h4>{{ venue.name }}</h4>
+                        <p>Location: {{ venue.location }}</p>
+                        <a href="{% url 'star_item' 'venue' venue.venueID %}" class="star-btn">
+                            {% if venue.venueID in starred_venues %}
+                                <img src="{% static 'images/star-filled.svg' %}" alt="Unstar">
+                            {% else %}
+                                <img src="{% static 'images/star-outline.svg' %}" alt="Star">
+                            {% endif %}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if not events and not venues %}
+                <p>No results found.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+    <a href="{% url 'index' %}" class="btn home-btn">Back to Home</a>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo">
+            </div>
+            <div class="footer-address">
+                <h3>PAHANG TOURISM PROMOTION BOARD</h3>
+                <p>9th Floor, Kompleks Teruntum, Jalan Mahkota, 25000 Kuantan, Pahang</p>
+            </div>
+            <div class="footer-contact">
+                <p>Phone: +609-517 7111</p>
+                <p>Email: infopahang@gmail.com</p>
+            </div>
+            <div class="footer-info-line">
+                <h3>TOURISM INFO LINE</h3>
+                <p class="info-number">1300 88 5050</p>
+                <p>Working days from 9.00am to 5.00pm</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Pahang Tourism Promotion Board. All Rights Reserved. View Our <a href="#">Terms of Use</a></p>
+        </div>
+    </footer>
+</body>
+</html>

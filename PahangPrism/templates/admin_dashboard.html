@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Pahang Prism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="date"], select, input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body background="{% static 'image/beachkuantan.jpg' %}">
+    <header>
+        <nav>
+            <div class="logo-container">
+                <a href="{% url 'index' %}"><img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo" class="logo"></a>
+                <h1>Pahang Prism</h1>
+            </div>
+            <ul>
+                <li><a href="{% url 'event_list' %}">Events</a></li>
+                <li><a href="{% url 'venue_list' %}">Venues</a></li>
+                <li><a href="{% url 'search' %}" class="search-btn">Search</a></li>
+                {% if request.session.userID %}
+                    <li><a href="{% url 'starred_list' %}">Starred</a></li>
+                    <li><a href="{% url 'booked_events' %}">Booked</a></li>
+                    {% if request.session.is_staff %}
+                        <li><a href="{% url 'admin_database_management' %}">Database Management</a></li>
+                    {% endif %}
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">
+                            <img src="{% static 'image/profilelogo.png' %}" alt="Profile" class="profile-icon">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'user_dashboard' %}">Profile</a>
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-btn">Logout</button>
+                            </form>
+                        </div>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        <div class="form-section">
+            <h2>Add New Event</h2>
+            <form method="POST" action="{% url 'admin_dashboard' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="event_name">Event Name:</label>
+                    <input type="text" id="event_name" name="event_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="event_date">Event Date:</label>
+                    <input type="date" id="event_date" name="event_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="event_venue">Venue:</label>
+                    <select id="event_venue" name="event_venue" required>
+                        <option value="" disabled selected>Please select a venue</option>
+                        {% for venue in venues %}
+                            <option value="{{ venue.venueID }}">{{ venue.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" name="add_event">Add Event</button>
+            </form>
+        </div>
+        
+        <div class="form-section">
+            <h2>Add New Venue</h2>
+            <form method="POST" action="{% url 'admin_dashboard' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="venue_id">Venue ID:</label>
+                    <input type="text" id="venue_id" name="venue_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="venue_name">Venue Name:</label>
+                    <input type="text" id="venue_name" name="venue_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="venue_location">Location:</label>
+                    <input type="text" id="venue_location" name="venue_location" required>
+                </div>
+                <button type="submit" name="add_venue">Add Venue</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'image/pahangnewlogo.png' %}" alt="Pahang Prism Logo">
+            </div>
+            <div class="footer-address">
+                <h3>PAHANG TOURISM PROMOTION BOARD</h3>
+                <p>9th Floor, Kompleks Teruntum, Jalan Mahkota, 25000 Kuantan, Pahang</p>
+            </div>
+            <div class="footer-contact">
+                <p>Phone: +609-517 7111</p>
+                <p>Email: infopahang@gmail.com</p>
+            </div>
+            <div class="footer-info-line">
+                <h3>TOURISM INFO LINE</h3>
+                <p class="info-number">1300 88 5050</p>
+                <p>Working days from 9.00am to 5.00pm</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Pahang Tourism Promotion Board. All Rights Reserved. View Our <a href="#">Terms of Use</a></p>
+        </div>
+    </footer>
+</body>
+</html>
